@@ -1,0 +1,51 @@
+{
+  "guiado": "Respondidas: 10/10 · Acertos: 10",
+  "quiz": "Respondidas: 12/12 · Acertos: 12",
+  "sequencia": "Ordem correta! A mudança nasce numa branch curta, é gravada e atualizada com o tronco localmente, chega ao GitHub por pull request, passa pelos gates de CI e pela revisão, entra na fila de merge e só então vira release.",
+  "checklist": [
+    {
+      "item": "Nome preenchido",
+      "ok": true
+    },
+    {
+      "item": "RA preenchido",
+      "ok": true
+    },
+    {
+      "item": "Exercício guiado: 10/10 respondidas (10/10)",
+      "ok": true
+    },
+    {
+      "item": "Sequência verificada (correta)",
+      "ok": true
+    },
+    {
+      "item": "Quiz: 12/12 respondidas (12/12)",
+      "ok": true
+    },
+    {
+      "item": "Dissertativas: 6 respostas com 40+ palavras",
+      "ok": true
+    },
+    {
+      "item": "Prática Carparts: 6 planos com 25+ palavras",
+      "ok": true
+    }
+  ],
+  "palavrasDissertativas": [
+    109,
+    132,
+    119,
+    118,
+    138,
+    121
+  ],
+  "palavrasPlanos": [
+    105,
+    101,
+    116,
+    104,
+    108,
+    119
+  ]
+}

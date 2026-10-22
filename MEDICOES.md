@@ -1,32 +1,38 @@
-# E1/E4 — protocolo de coleta
+# E4 — medições reais do GitHub Actions
 
-Status: nenhuma execução de GitHub Actions foi feita; não há média ou ganho medido.
-Os 11 dias e 40 PRs/semana são dados do enunciado, não observações desta execução.
-Os componentes fornecidos são um exemplo mínimo executável, não o sistema real.
+Mesmo SHA em seis jobs ubuntu-latest; três amostras por configuração.
+Antes: fetch-depth 0, checkout completo. Depois: fetch-depth 1, sparse de API, UI e scripts.
+Mesmo comando de teste nos dois modos.
 
-1. No remoto correto, guardar `git count-objects -vH`, branches e PRs abertos.
-2. Aprovar o workflow de benchmark em PR com revisão humana. Informar SHA completo.
-3. Executar benchmark: produz três amostras de antes e três de depois, todas em
-   ubuntu-latest, com os mesmos testes de API e SHA; a ordem não é garantia de
-   aleatoriedade. Guardar os seis CSVs, URLs dos jobs e versão do runner.
-4. A medida checkout_ms inclui custo de orquestração entre os passos. trabalho_ms
-   cobre checkout e teste até a coleta; não é a duração total do job.
-   Obter também started_at/completed_at dos jobs no GitHub e calcular a duração
-   total incluindo setup e upload. Registrar fila de espera separadamente.
-5. Calcular média antes = soma dos três tempos/3; média depois analogamente.
-   Ganho percentual = 100*(antes-depois)/antes. Comparar dispersão e cache;
-   três amostras atendem ao mínimo, sem comprovar significância estatística.
-6. Medir CI obrigatório completo também: o scan de histórico mantém fetch-depth 0
-   por uma necessidade distinta e pode limitar o ganho global.
-7. Priorizar conflitos por frequência observada: branches antigas, mesma região
-   de arquivo, mudanças extensas e dependências compartilhadas. Atribuir causas
-   após examinar os PRs, não presumir que os exemplos são a medição real.
+| Modo | Amostra | Checkout ms | Trabalho ms | Job total ms | Evidência |
+|---|---:|---:|---:|---:|---|
+| antes | 1 | 885 | 1214 | 6000 | [job](https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923283) |
+| antes | 2 | 792 | 1047 | 6000 | [job](https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923670) |
+| antes | 3 | 1032 | 1421 | 8000 | [job](https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923798) |
+| depois | 1 | 1123 | 1368 | 7000 | [job](https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923448) |
+| depois | 2 | 1233 | 1606 | 9000 | [job](https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923549) |
+| depois | 3 | 872 | 1195 | 5000 | [job](https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923480) |
 
-| Modo | Amostra | Checkout ms | Trabalho ms | Job total ms | URL |
-|---|---|---|---|---|---|
-| Antes | 1 | pendente | pendente | pendente | pendente |
-| Antes | 2 | pendente | pendente | pendente | pendente |
-| Antes | 3 | pendente | pendente | pendente | pendente |
-| Depois | 1 | pendente | pendente | pendente | pendente |
-| Depois | 2 | pendente | pendente | pendente | pendente |
-| Depois | 3 | pendente | pendente | pendente | pendente |
+Média de checkout antes: 903.00 ms; depois: 1076.00 ms.
+Redução calculada do checkout: -19.16% (valor negativo significa aumento).
+Média do job completo antes: 6666.67 ms; depois: 7000.00 ms.
+
+Checkout_ms inclui orquestração entre passos. Trabalho_ms vai até a coleta após os testes.
+Job_total_ms vem de started_at/completed_at do GitHub e inclui os demais passos.
+O repositório é novo e pequeno; variação de runners e custo fixo dominam. Três amostras
+não permitem concluir ganho de capacidade nem projetar o lead time de uma empresa real.
+Não houve medição longitudinal de duas semanas. Os 11 dias e a meta de dois dias vêm do enunciado.
+O experimento não demonstrou redução no checkout neste laboratório. A configuração
+reduz o escopo de dados solicitado, mas seu benefício de tempo não foi comprovado aqui.
+
+## Diagnóstico e acompanhamento
+
+O clone inicial teve 39 objetos em um pack de 22,88 KiB; a main possui somente o
+README de inicialização automática e a implementação está proposta na outra branch.
+A data do último commit mede atividade, não criação da branch. Por ser um laboratório
+novo, não há diagnóstico retrospectivo de uma empresa real. Conflito por alteração
+da mesma linha foi reproduzido com evidência no laboratório Git.
+
+A política prevê duas semanas: dias 1–2 diagnóstico; 3–5 proposta de CI e proteção;
+6–8 revisão e ajustes; 9–10 comparação. Medir conflitos por PR, espera por revisão
+e lead time até produção. A meta de dois dias ainda não foi comprovada.

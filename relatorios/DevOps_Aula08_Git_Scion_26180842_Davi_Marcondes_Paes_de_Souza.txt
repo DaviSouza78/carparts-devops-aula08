@@ -1,0 +1,134 @@
+========================================================================
+SENAI · INTEGRAÇÃO E ENTREGA CONTÍNUA – DEVOPS · 2º ADS
+AULA 08 · Git e Scion: Controle de Versão na Era dos Agentes de IA
+========================================================================
+Aluno: Davi Marcondes Paes de Souza
+RA: 26180842
+Gerado em: 22/10/2026, 20:15:12
+
+RESUMO
+  Exercício guiado ....... 10/10
+  Sequência .............. correta (1 tentativa(s))
+  Quiz ................... 12/12
+
+========================================================================
+09 · EXERCÍCIO GUIADO
+========================================================================
+1. Gravar um snapshot do que está no staging com git commit -m "fix(api): timeout".
+   Resposta: Git local  [correta]
+2. Exigir aprovação de um revisor e checks verdes antes de aceitar mudanças na main.
+   Resposta: GitHub (remoto/PR)  [correta]
+3. Criar o changeset no servidor e deixá-lo disponível para todos os nós instantaneamente.
+   Resposta: Scion  [correta]
+4. Fazer checkout com fetch-depth: 1 e sparse-checkout e rodar os testes a cada push.
+   Resposta: Pipeline CI/CD  [correta]
+5. Reaplicar seus commits sobre a ponta atual do tronco com git rebase origin/main.
+   Resposta: Git local  [correta]
+6. Atualizar a referência da branch principal com compare-and-swap numa linha do Spanner.
+   Resposta: Scion  [correta]
+7. Colocar o PR aprovado numa fila de mesclagem e testá-lo junto com os PRs à frente (evento merge_group).
+   Resposta: GitHub (remoto/PR)  [correta]
+8. Rodar gitleaks e barrar a integração se uma chave de API aparecer no diff.
+   Resposta: Pipeline CI/CD  [correta]
+9. Consultar blame e histórico de um arquivo por API, sem nenhuma cópia local do repositório.
+   Resposta: Scion  [correta]
+10. Guardar mudanças pela metade com git stash para trocar de tarefa.
+   Resposta: Git local  [correta]
+
+========================================================================
+10 · SEQUÊNCIA (ordem final do aluno)
+========================================================================
+01. Sincronizar com o tronco (git switch main && git pull) e criar uma branch curta para a tarefa
+02. Editar o código e conferir com git status e git diff
+03. Preparar os arquivos com git add e gravar com git commit no padrão Conventional Commits
+04. Atualizar a branch com git fetch e git rebase origin/main, resolvendo conflitos se houver
+05. Enviar com git push -u origin e abrir o pull request no GitHub
+06. CI roda checkout enxuto, lint, testes e scan de segredos no pull request
+07. Revisor aprovado pelo CODEOWNERS revisa a intenção da mudança e aprova
+08. PR entra na fila de merge (merge_group), é testado com os da frente e chega à main
+09. Tag de release, implantação em homologação e promoção para produção com aprovação
+
+========================================================================
+11 · QUIZ
+========================================================================
+Q1. Como o Git armazena cada versão do projeto?
+   Resposta: B) Como snapshots, com objetos identificados pelo hash do próprio conteúdo  [correta]
+Q2. Qual comando desfaz com segurança um commit que já está na main compartilhada?
+   Resposta: C) git revert  [correta]
+Q3. O que faz git clone --filter=blob:none?
+   Resposta: A) Partial clone: traz commits e trees e baixa o conteúdo dos arquivos sob demanda  [correta]
+Q4. Segundo a Anthropic, qual foi a motivação central para criar o Scion?
+   Resposta: D) O volume de merges gerado por agentes de IA, de cerca de 2.500 para mais de 30.000 por dia, tornou o controle de versão o maior gargalo  [correta]
+Q5. Qual premissa do Git perdeu valor no monorepo da Anthropic?
+   Resposta: B) O trabalho offline, porque quase todos os clientes são agentes e jobs sempre conectados  [correta]
+Q6. O que é um changeset no Scion?
+   Resposta: C) Uma entrada num write-ahead log que lista só os arquivos alterados em relação ao primeiro pai, criada no servidor  [correta]
+Q7. Quais são as três camadas do Scion, da mais próxima do job para a mais distante?
+   Resposta: A) scion-daemon (por nó), scion-cache (regional) e scion-server (autoritativo)  [correta]
+Q8. Por que o endereçamento por conteúdo facilita o cache no Scion?
+   Resposta: D) Porque o dado nunca muda depois de gravado, então qualquer servidor ou cache pode guardá-lo sem coordenação  [correta]
+Q9. O que a Anthropic afirma sobre o uso do Scion fora da empresa?
+   Resposta: C) Não é substituto do Git para uso geral e não há lançamento previsto; a ideia é compartilhar o raciocínio com a comunidade Git  [correta]
+Q10. Qual é a função da ferramenta Antique?
+   Resposta: A) Revisão de código com restrições semânticas de aprovação  [correta]
+Q11. Para um workflow do GitHub Actions funcionar com a fila de mesclagem, o que é preciso?
+   Resposta: D) Incluir o evento merge_group no gatilho on: do workflow  [correta]
+Q12. Qual estratégia de branches está mais alinhada à entrega contínua e ao modelo do Scion?
+   Resposta: B) Trunk-based, com branches curtas integradas à main pelo menos uma vez por dia  [correta]
+
+========================================================================
+12 · DISSERTATIVAS
+========================================================================
+D1. Explique a diferença entre o modelo distribuído do Git e o modelo cliente-servidor do Scion e em que situações cada um é vantajoso.
+(109 palavras)
+O Git usa um modelo distribuído: um clone completo permite criar commits, consultar o histórico e comparar versões mesmo sem conexão. O GitHub hospeda o remoto e acrescenta colaboração, mas não é o próprio Git. O Scion concentra essas operações em servidores e mantém um cache limitado no cliente, buscando objetos conforme necessário. O Git é adequado à Carparts, que tem uma equipe pequena e precisa de ferramentas conhecidas. O Scion faz sentido em monorepos enormes, com agentes e jobs sempre conectados, nos quais manter cópias completas custa mais do que o benefício de trabalhar offline. Clones rasos e parciais são exceções à ideia de clone completo no Git.
+
+D2. Descreva o fluxo de trabalho de uma funcionalidade no Git, do clone ao merge, indicando onde entram o CI e a revisão.
+(132 palavras)
+Primeiro clono o repositório e sincronizo a main. Crio uma branch curta, como feat/catalogo, edito os arquivos e examino git status e git diff. Seleciono as alterações com git add e registro um commit como feat(portal): adicionar busca de pecas. Antes do primeiro push, faço git fetch e git rebase origin/main, resolvendo conflitos e executando testes. Abro o pull request e aguardo lint, testes e verificação de segredos no CI. O responsável definido no CODEOWNERS revisa a intenção, os riscos e os resultados. Com aprovação humana e checks verdes, o PR entra na merge queue, que testa a combinação com a main atual pelo evento merge_group. Depois da integração, uma tag identifica a versão destinada à homologação e à promoção aprovada. Branches curtas diminuem a divergência; branches compartilhadas não têm histórico reescrito.
+
+D3. Quais recursos do próprio Git ajudam em monorepos grandes e por que, segundo a Anthropic, eles não bastaram no caso dela?
+(119 palavras)
+O Git oferece shallow clone para limitar o histórico, partial clone para buscar blobs sob demanda e sparse-checkout para materializar apenas caminhos necessários. Scalar e git maintenance ajudam na organização e manutenção de repositórios grandes; worktree permite várias áreas de trabalho compartilhando o armazenamento local de objetos. Segundo o artigo da Anthropic, esses recursos e espelhos internos não acompanharam seu crescimento: havia histórico próximo de 100 GB e cerca de 25 milhões de checkouts diários de CI. A empresa relata dificuldades para combinar recursos e manter snapshots atualizados, diff e blame eficientes. Isso descreve uma carga excepcional, não uma incapacidade geral do Git. Na Carparts, convém medir o checkout e otimizar os jobs antes de considerar mudança de ferramenta.
+
+D4. Explique changesets, endereçamento por conteúdo e as três camadas de cache do Scion e como essas escolhas reduzem custo.
+(118 palavras)
+Um changeset do Scion registra os arquivos alterados em relação ao primeiro pai, com referências ao conteúdo compactado, e é criado no servidor. O endereçamento por conteúdo torna os objetos imutáveis: alterar o conteúdo produz outro identificador, permitindo reutilizar objetos em cache sem invalidar a versão anterior. O caminho de leitura passa por scion-daemon no nó, scion-cache na região e scion-server autoritativo, que consulta Spanner e armazenamento de blobs quando necessário. Jobs do mesmo nó reaproveitam objetos e o cliente solicita apenas o que precisa. Essa arquitetura reduz transferência repetida e trabalho de reconstrução do repositório. O artigo relata alto aproveitamento dos caches; a hierarquia também contém falhas para evitar que uma indisponibilidade regional sobrecarregue os servidores centrais.
+
+D5. Faça uma leitura crítica da notícia “Anthropic substituiu o Git”: o que é fato, o que é interpretação e quais cuidados ter com as fontes.
+(138 palavras)
+A afirmação de que a Anthropic substituiu o Git precisa delimitar o contexto: a fonte primária relata a migração de seu monorepo interno para o Scion, não o abandono universal do Git. A notícia pode resumir o caso e interpretar seu impacto, mas a confirmação técnica deve vir do artigo da empresa. As métricas publicadas são autorrelatadas, sem validação independente demonstrada. A estimativa de tráfego com clonagem ingênua não deve ser apresentada como tráfego efetivamente observado. Também não se deve confundir o Scion interno com projetos homônimos públicos. O texto afirma que a solução não é adequada ao uso geral e explica as dificuldades de oferecê-la a outras organizações. O endereço da Heise fornecido não ficou acessível nesta consulta, portanto não atribuo à matéria detalhes que não consegui verificar. Fonte primária: https://www.anthropic.com/research/redesigning-source-control (publicação em 13/10/2026; consulta em 22/10/2026).
+
+D6. Como agentes de IA mudam o papel do engenheiro e a forma de revisar e integrar código? Relacione com o Antique e com a merge queue do GitHub.
+(121 palavras)
+Agentes aumentam o número de alterações propostas e tornam revisão, testes e integração possíveis gargalos. O engenheiro continua responsável por definir restrições, avaliar arquitetura e rejeitar soluções que satisfaçam um teste violando um requisito. Revisar intenção exige evidências de correção e atenção ao código sensível, não aprovação automática. O Antique, ferramenta interna da Anthropic, permite exigências de aprovação conforme o significado da mudança. No GitHub, CODEOWNERS e proteção de branches oferecem uma aproximação por caminhos, sem equivaler à análise semântica do Antique. Para a Carparts, todo PR de agente deve receber aprovação humana registrada. A merge queue valida a composição das mudanças com merge_group antes da main; testes após a integração e antes da implantação complementam esse controle, sem dispensar revisão.
+
+========================================================================
+13 · PRÁTICA SAP1-DEVOPS · CARPARTS · PLANO DE ENTREGA
+========================================================================
+E1 · Diagnóstico do repositório e do fluxo atual (peso 15%)
+(105 palavras)
+Criei o repositório acadêmico https://github.com/DaviSouza78/carparts-devops-aula08 e abri o PR https://github.com/DaviSouza78/carparts-devops-aula08/pull/1, mantendo a main protegida. O diagnóstico real do clone registrou 39 objetos em um pack de 22,88 KiB, sem objetos soltos ou lixo, antes da atualização documental. Há duas branches remotas, main e codex/carparts-aula08; as datas dos commits indicam atividade, não criação de branches. O repositório é novo, portanto não há histórico real de branches antigas ou conflitos da empresa fictícia. No CI, três execuções por configuração mediram checkout médio de 903 ms antes e 1.076 ms depois. Anexo diagnóstico, CSVs, logs e URLs; o conflito de edição simultânea foi reproduzido separadamente no laboratório local.
+
+E2 · Estratégia de branches e convenção de commits (peso 15%)
+(101 palavras)
+Produzi CONTRIBUTING.md com trunk-based, integração diária, vida máxima de dois dias úteis por branch, nomes feat/ e fix/ e Conventional Commits com exemplos. O documento define PR pequeno, descrição do uso de IA, responsabilidade humana, testes, revisão por pasta e changelog de release derivado dos commits. Rebase fica restrito a trabalho privado; branches já compartilhadas recebem merge da main, sem reescrita do histórico. Publiquei a política na branch codex/carparts-aula08, por meio do PR 1, para revisão posterior de um colega conforme orientação do professor. A evidência é o arquivo no PR aberto; não afirmo que ele já foi aprovado ou integrado.
+
+E3 · Proteção da main, CODEOWNERS e merge queue (peso 20%)
+(116 palavras)
+Ativei e consultei a proteção da main no repositório criado: PR obrigatório, uma aprovação humana, code owner, descarte de aprovações antigas, aprovação da última alteração por pessoa distinta, conversas resolvidas e check ci-obrigatorio. Administradores seguem a regra, e force push e exclusão estão bloqueados. O CODEOWNERS por pasta está proposto no PR, incluindo prompts/, e terá efeito após existir na main; antes do merge será necessário adicionar o colega com escrita como responsável. A revisão humana fica pendente para depois, conforme instrução do professor. A API rejeitou a merge queue com HTTP 422 neste repositório pessoal, que não é elegível; merge_group permanece preparado. Anexo respostas reais da API e link do PR, sem alegar fila ativa.
+
+E4 · CI com checkout enxuto e medição de tempo (peso 20%)
+(104 palavras)
+Executei no GitHub Actions o CI com pull_request e merge_group, matriz por componente, testes de integração, scan de segredos e check agregador ci-obrigatorio. Todos passaram na execução https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051067. O benchmark https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060 comparou três checkouts completos com três rasos e esparsos no mesmo SHA. A média foi 903 ms antes e 1.076 ms depois, aumento de 19,16%, sem ganho comprovado neste repositório pequeno. A duração média total dos jobs passou de 6,67 para 7,00 segundos. Os filtros paths ficam em workflow opcional para não omitir o check obrigatório. Anexo seis CSVs originais, tabela, metadados de jobs e logs; a variação dos runners limita a interpretação.
+
+E5 · Laboratório: conflito, rebase, revert e bisect (peso 15%)
+(108 palavras)
+Executei um laboratório isolado e publiquei as evidências no PR. Duas branches privadas alteraram a mesma linha, provocando conflito real no rebase; resolvi combinando timeout e tentativas, preservei as duas intenções e rodei o teste. Depois reverti um commit que havia integrado a main local, mantendo o histórico. Em outra sequência inseri uma regressão e usei git bisect run node scripts/teste.cjs. O hash encontrado, 3fb01ed6f24c7755d4eb272918ac4e921a44ee12, corresponde exatamente ao commit do bug. Após revert corretivo, o teste final passou. Anexo log comentado, script e bundle. O laboratório é sintético e local; no GitHub a atividade permanece em PR sem merge, aguardando revisão humana, sem force push ou reset destrutivo.
+
+E6 · Parecer técnico: ideias do Scion para a Carparts (peso 15%)
+(119 palavras)
+Produzi parecer técnico com a fonte primária https://www.anthropic.com/research/redesigning-source-control. O Scion atende a uma escala excepcional e depende de infraestrutura interna; a Carparts continuará em Git e GitHub. A proposta aplica três ideias: materializar menos dados no CI, integrar mudanças pequenas com frequência e revisar conforme risco e responsabilidade por pasta. As métricas correspondentes são checkout e duração do job, idade de branches e conflitos, espera por revisão e defeitos posteriores. O benchmark real não demonstrou redução de tempo neste laboratório pequeno; não projetei ganhos inexistentes para a empresa fictícia. O lead time de 11 dias e a meta de dois dias pertencem ao enunciado; verificar a meta requer acompanhamento de duas semanas. Revisão humana e fila elegível permanecem pendentes.
+
+========================================================================
+Fim do relatório.

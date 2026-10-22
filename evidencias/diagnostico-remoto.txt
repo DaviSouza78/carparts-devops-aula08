@@ -1,0 +1,19 @@
+Diagnóstico real do repositório acadêmico novo — não é histórico de uma empresa existente.
+Comando: git count-objects -vH
+count: 0
+size: 0 bytes
+in-pack: 39
+packs: 1
+size-pack: 22.88 KiB
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes
+Branches e data do último commit (não data de criação):
+codex/carparts-aula08 | 2026-10-22 20:10:12 -0300 | feat(devops): propor politica Carparts, CI enxuto e laboratorio Git
+origin/codex/carparts-aula08 | 2026-10-22 20:10:12 -0300 | feat(devops): propor politica Carparts, CI enxuto e laboratorio Git
+origin/main | 2026-10-22 20:09:00 -0300 | Initial commit
+Remoto:
+origin	https://github.com/DaviSouza78/carparts-devops-aula08.git (fetch)
+origin	https://github.com/DaviSouza78/carparts-devops-aula08.git (push)
+Data de coleta:
+2026-10-22T20:11:39.4158324-03:00
