@@ -1,0 +1,8 @@
+# Responsável titular do laboratório. Adicionar o colega com acesso de escrita
+# como owner antes do primeiro merge; Davi não pode aprovar o próprio PR.
+* @DaviSouza78
+/apps/portal/ @DaviSouza78
+/apps/api/ @DaviSouza78
+/libs/ui/ @DaviSouza78
+/prompts/ @DaviSouza78
+/.github/ @DaviSouza78

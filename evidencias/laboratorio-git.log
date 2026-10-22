@@ -1,0 +1,415 @@
+
+# Ambiente sintético local, criado para a atividade. Nenhum remoto configurado ou push executado.
+$ git init -b main
+Initialized empty Git repository in C:/Users/Administrator/Documents/ChatGPT/Scion/entrega/laboratorio-validado/.git/
+
+[exit 0]
+$ git config user.name Davi Marcondes Paes de Souza
+
+[exit 0]
+$ git config user.email 26180842@aluno.invalid
+
+[exit 0]
+$ git config core.autocrlf false
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m chore: iniciar laboratorio Carparts
+[main (root-commit) a283496] chore: iniciar laboratorio Carparts
+ 6 files changed, 6 insertions(+)
+ create mode 100644 apps/api/config.json
+ create mode 100644 apps/api/preco.cjs
+ create mode 100644 apps/portal/README.md
+ create mode 100644 libs/ui/README.md
+ create mode 100644 prompts/revisao.md
+ create mode 100644 scripts/teste.cjs
+
+[exit 0]
+$ git rev-parse HEAD
+a283496401a928865bdb05cbcd31a581bb67dfca
+
+[exit 0]
+
+# Branches privadas ainda não publicadas: duas mudanças na mesma linha provocam conflito real.
+$ git switch -c feat/retries
+Switched to a new branch 'feat/retries'
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m feat(api): aumentar tentativas
+[feat/retries a7aa491] feat(api): aumentar tentativas
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[exit 0]
+$ git rev-parse HEAD
+a7aa491779640c52db770c1358b7113473b0302b
+
+[exit 0]
+$ git switch main
+Switched to branch 'main'
+
+[exit 0]
+$ git switch -c fix/timeout
+Switched to a new branch 'fix/timeout'
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m fix(api): ampliar timeout
+[fix/timeout d3d85bb] fix(api): ampliar timeout
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[exit 0]
+$ git rev-parse HEAD
+d3d85bb1ad8c6d91be6c9adef3ee522cde20550e
+
+[exit 0]
+$ git switch main
+Switched to branch 'main'
+
+[exit 0]
+$ git merge --ff-only fix/timeout
+Updating a283496..d3d85bb
+Fast-forward
+ apps/api/config.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[exit 0]
+$ git switch feat/retries
+Switched to branch 'feat/retries'
+
+[exit 0]
+$ git rebase main
+Auto-merging apps/api/config.json
+CONFLICT (content): Merge conflict in apps/api/config.json
+Rebasing (1/1)error: could not apply a7aa491... feat(api): aumentar tentativas
+hint: Resolve all conflicts manually, mark them as resolved with
+hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+hint: You can instead skip this commit: run "git rebase --skip".
+hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"
+Could not apply a7aa491... # feat(api): aumentar tentativas
+
+[exit 1]
+
+# Conflito resolvido combinando timeout 60 e retries 3; não escolher cegamente um lado.
+$ git add apps/api/config.json
+
+[exit 0]
+$ git -c core.editor=true rebase --continue
+[detached HEAD 6d09236] feat(api): aumentar tentativas
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Successfully rebased and updated refs/heads/feat/retries.
+
+[exit 0]
+$ node scripts/teste.cjs
+PASS: total de pecas correto
+[exit 0]
+$ git switch main
+Switched to branch 'main'
+
+[exit 0]
+$ git merge --ff-only feat/retries
+Updating d3d85bb..6d09236
+Fast-forward
+ apps/api/config.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[exit 0]
+
+# Revert de commit que já integra a main local: novo commit inverso preserva o histórico.
+$ git switch -c feat/banner
+Switched to a new branch 'feat/banner'
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m feat(portal): incluir banner
+[feat/banner 7c4deff] feat(portal): incluir banner
+ 1 file changed, 1 insertion(+)
+ create mode 100644 apps/portal/banner.txt
+
+[exit 0]
+$ git rev-parse HEAD
+7c4deffc8dbd55349febb1c97cbce903bbbc6c40
+
+[exit 0]
+$ git switch main
+Switched to branch 'main'
+
+[exit 0]
+$ git merge --ff-only feat/banner
+Updating 6d09236..7c4deff
+Fast-forward
+ apps/portal/banner.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 apps/portal/banner.txt
+
+[exit 0]
+$ git switch -c fix/reverter-banner
+Switched to a new branch 'fix/reverter-banner'
+
+[exit 0]
+$ git revert --no-edit 7c4deffc8dbd55349febb1c97cbce903bbbc6c40
+[fix/reverter-banner fd907b5] Revert "feat(portal): incluir banner"
+ Date: Thu Oct 22 20:06:05 2026 -0300
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 apps/portal/banner.txt
+
+[exit 0]
+$ git switch main
+Switched to branch 'main'
+
+[exit 0]
+$ git merge --ff-only fix/reverter-banner
+Updating 7c4deff..fd907b5
+Fast-forward
+ apps/portal/banner.txt | 1 -
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 apps/portal/banner.txt
+
+[exit 0]
+
+# Busca binária: teste retorna 0 para versão boa e 1 para regressão.
+$ git rev-parse HEAD
+fd907b554a97d656beaeecdbb3a85fa3017d154c
+
+[exit 0]
+$ git switch -c feat/cenario-bisect
+Switched to a new branch 'feat/cenario-bisect'
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m docs(portal): descrever catalogo
+[feat/cenario-bisect 79fbcf0] docs(portal): descrever catalogo
+ 1 file changed, 1 insertion(+)
+ create mode 100644 apps/portal/descricao.txt
+
+[exit 0]
+$ git rev-parse HEAD
+79fbcf01964ceef73ae2a77a3f5f390b84e0e1dc
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m test(api): inserir regressao intencional no total
+[feat/cenario-bisect 3fb01ed] test(api): inserir regressao intencional no total
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[exit 0]
+$ git rev-parse HEAD
+3fb01ed6f24c7755d4eb272918ac4e921a44ee12
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m style(ui): definir cor
+[feat/cenario-bisect dd90c4e] style(ui): definir cor
+ 1 file changed, 1 insertion(+)
+ create mode 100644 libs/ui/cores.txt
+
+[exit 0]
+$ git rev-parse HEAD
+dd90c4e5dbfa7073709cfffcdb6599ee4215e0ff
+
+[exit 0]
+$ git add .
+
+[exit 0]
+$ git commit -m docs(prompts): definir criterio
+[feat/cenario-bisect ad4739b] docs(prompts): definir criterio
+ 1 file changed, 1 insertion(+)
+ create mode 100644 prompts/criterios.txt
+
+[exit 0]
+$ git rev-parse HEAD
+ad4739b744f324d75a8bf86fba1f2db2731ad319
+
+[exit 0]
+$ git switch main
+Switched to branch 'main'
+
+[exit 0]
+$ git merge --ff-only feat/cenario-bisect
+Updating fd907b5..ad4739b
+Fast-forward
+ apps/api/preco.cjs        | 2 +-
+ apps/portal/descricao.txt | 1 +
+ libs/ui/cores.txt         | 1 +
+ prompts/criterios.txt     | 1 +
+ 4 files changed, 4 insertions(+), 1 deletion(-)
+ create mode 100644 apps/portal/descricao.txt
+ create mode 100644 libs/ui/cores.txt
+ create mode 100644 prompts/criterios.txt
+
+[exit 0]
+$ git rev-parse HEAD
+ad4739b744f324d75a8bf86fba1f2db2731ad319
+
+[exit 0]
+$ git bisect start ad4739b744f324d75a8bf86fba1f2db2731ad319 fd907b554a97d656beaeecdbb3a85fa3017d154c
+Bisecting: 1 revision left to test after this (roughly 1 step)
+[3fb01ed6f24c7755d4eb272918ac4e921a44ee12] test(api): inserir regressao intencional no total
+
+[exit 0]
+$ git bisect run node scripts/teste.cjs
+running 'node' 'scripts/teste.cjs'
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[79fbcf01964ceef73ae2a77a3f5f390b84e0e1dc] docs(portal): descrever catalogo
+running 'node' 'scripts/teste.cjs'
+PASS: total de pecas correto
+3fb01ed6f24c7755d4eb272918ac4e921a44ee12 is the first 'bad' commit
+commit 3fb01ed6f24c7755d4eb272918ac4e921a44ee12
+Author: Davi Marcondes Paes de Souza <26180842@aluno.invalid>
+Date:   Thu Oct 22 20:06:06 2026 -0300
+
+    test(api): inserir regressao intencional no total
+
+ apps/api/preco.cjs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+bisect found first 'bad' commit
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+13 !== 30
+
+    at Object.<anonymous> (C:\Users\Administrator\Documents\ChatGPT\Scion\entrega\laboratorio-validado\scripts\teste.cjs:1:96)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 13,
+  expected: 30,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.20.0
+
+[exit 0]
+$ git rev-parse refs/bisect/bad
+3fb01ed6f24c7755d4eb272918ac4e921a44ee12
+
+[exit 0]
+$ git bisect log
+# bad: [ad4739b744f324d75a8bf86fba1f2db2731ad319] docs(prompts): definir criterio
+# good: [fd907b554a97d656beaeecdbb3a85fa3017d154c] Revert "feat(portal): incluir banner"
+git bisect start 'ad4739b744f324d75a8bf86fba1f2db2731ad319' 'fd907b554a97d656beaeecdbb3a85fa3017d154c'
+# bad: [3fb01ed6f24c7755d4eb272918ac4e921a44ee12] test(api): inserir regressao intencional no total
+git bisect bad 3fb01ed6f24c7755d4eb272918ac4e921a44ee12
+# good: [79fbcf01964ceef73ae2a77a3f5f390b84e0e1dc] docs(portal): descrever catalogo
+git bisect good 79fbcf01964ceef73ae2a77a3f5f390b84e0e1dc
+# first 'bad' commit: [3fb01ed6f24c7755d4eb272918ac4e921a44ee12] test(api): inserir regressao intencional no total
+
+[exit 0]
+$ git bisect reset
+Previous HEAD position was 79fbcf0 docs(portal): descrever catalogo
+Switched to branch 'main'
+
+[exit 0]
+
+# Recuperação final por revert da regressão encontrada.
+$ git switch -c fix/remover-regressao
+Switched to a new branch 'fix/remover-regressao'
+
+[exit 0]
+$ git revert --no-edit 3fb01ed6f24c7755d4eb272918ac4e921a44ee12
+[fix/remover-regressao 1b1a427] Revert "test(api): inserir regressao intencional no total"
+ Date: Thu Oct 22 20:06:08 2026 -0300
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[exit 0]
+$ git switch main
+Switched to branch 'main'
+
+[exit 0]
+$ git merge --ff-only fix/remover-regressao
+Updating ad4739b..1b1a427
+Fast-forward
+ apps/api/preco.cjs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+[exit 0]
+$ node scripts/teste.cjs
+PASS: total de pecas correto
+[exit 0]
+$ git log --graph --all --oneline
+* 1b1a427 Revert "test(api): inserir regressao intencional no total"
+* ad4739b docs(prompts): definir criterio
+* dd90c4e style(ui): definir cor
+* 3fb01ed test(api): inserir regressao intencional no total
+* 79fbcf0 docs(portal): descrever catalogo
+* fd907b5 Revert "feat(portal): incluir banner"
+* 7c4deff feat(portal): incluir banner
+* 6d09236 feat(api): aumentar tentativas
+* d3d85bb fix(api): ampliar timeout
+* a283496 chore: iniciar laboratorio Carparts
+
+[exit 0]
+$ git status --short
+
+[exit 0]
+$ git fsck --full
+dangling tree 1f7fec7d8a7f17401e32835f6b449b59fc4e514e
+
+[exit 0]
+$ git count-objects -vH
+count: 61
+size: 6.10 KiB
+in-pack: 0
+packs: 0
+size-pack: 0 bytes
+prune-packable: 0
+garbage: 0
+size-garbage: 0 bytes
+
+[exit 0]
+$ git for-each-ref --format=%(refname:short) | %(committerdate:iso8601) | %(subject) refs/heads
+feat/banner | 2026-10-22 20:06:04 -0300 | feat(portal): incluir banner
+feat/cenario-bisect | 2026-10-22 20:06:07 -0300 | docs(prompts): definir criterio
+feat/retries | 2026-10-22 20:06:03 -0300 | feat(api): aumentar tentativas
+fix/remover-regressao | 2026-10-22 20:06:08 -0300 | Revert "test(api): inserir regressao intencional no total"
+fix/reverter-banner | 2026-10-22 20:06:05 -0300 | Revert "feat(portal): incluir banner"
+fix/timeout | 2026-10-22 20:06:01 -0300 | fix(api): ampliar timeout
+main | 2026-10-22 20:06:08 -0300 | Revert "test(api): inserir regressao intencional no total"
+
+[exit 0]
+$ git remote -v
+
+[exit 0]
+$ git bundle create ../evidencias/laboratorio.bundle --all
+
+[exit 0]
+$ git bundle verify ../evidencias/laboratorio.bundle
+The bundle contains these 8 refs:
+7c4deffc8dbd55349febb1c97cbce903bbbc6c40 refs/heads/feat/banner
+ad4739b744f324d75a8bf86fba1f2db2731ad319 refs/heads/feat/cenario-bisect
+6d092369c259f88df75d609578ad41c9acb3f0a9 refs/heads/feat/retries
+1b1a427086504120aeff8eca0f62f57041f6e38a refs/heads/fix/remover-regressao
+fd907b554a97d656beaeecdbb3a85fa3017d154c refs/heads/fix/reverter-banner
+d3d85bb1ad8c6d91be6c9adef3ee522cde20550e refs/heads/fix/timeout
+1b1a427086504120aeff8eca0f62f57041f6e38a refs/heads/main
+1b1a427086504120aeff8eca0f62f57041f6e38a HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+../evidencias/laboratorio.bundle is okay
+
+[exit 0]

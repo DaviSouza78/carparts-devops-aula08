@@ -1,0 +1,57 @@
+name: Benchmark de checkout antes e depois
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: SHA completo usado em todas as comparações
+        required: true
+permissions:
+  contents: read
+jobs:
+  medir:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 3
+      matrix:
+        repeticao: [1, 2, 3]
+        modo: [antes, depois]
+    steps:
+      - name: Iniciar medição
+        run: echo "INICIO_NS=$(date +%s%N)" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v7
+        if: matrix.modo == 'antes'
+        with:
+          ref: ${{ inputs.sha || github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/checkout@v7
+        if: matrix.modo == 'depois'
+        with:
+          ref: ${{ inputs.sha || github.event.pull_request.head.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            apps/api
+            libs/ui
+            scripts
+      - name: Registrar checkout
+        run: echo "FIM_CHECKOUT_NS=$(date +%s%N)" >> "$GITHUB_ENV"
+      - name: Mesmo trabalho nos dois modos
+        run: node scripts/validar.cjs apps/api
+      - name: Registrar tempo comparável e identidade da execução
+        env:
+          MODO: ${{ matrix.modo }}
+          REPETICAO: ${{ matrix.repeticao }}
+        run: |
+          fim=$(date +%s%N)
+          checkout_ms=$(( (FIM_CHECKOUT_NS - INICIO_NS) / 1000000 ))
+          trabalho_ms=$(( (fim - INICIO_NS) / 1000000 ))
+          echo 'run_id,modo,repeticao,sha,checkout_ms,trabalho_ms' > resultado.csv
+          echo "$GITHUB_RUN_ID,$MODO,$REPETICAO,$(git rev-parse HEAD),$checkout_ms,$trabalho_ms" >> resultado.csv
+          cat resultado.csv >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-${{ matrix.modo }}-${{ matrix.repeticao }}
+          path: resultado.csv
