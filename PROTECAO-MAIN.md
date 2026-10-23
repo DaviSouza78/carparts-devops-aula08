@@ -7,8 +7,10 @@ conversas resolvidas e ci-obrigatorio. Administradores seguem a regra; force pus
 e exclusão bloqueados; histórico linear obrigatório.
 
 O CODEOWNERS está proposto no PR e suas regras por pasta passarão a valer após
-existir na main. Antes do primeiro merge, adicionar o colega com acesso de escrita
-como responsável. Revisão humana fica pendente, conforme orientação do professor.
+existir na main. Joaopedro0s foi convidado com escrita e incluído como responsável;
+o acesso efetivo depende do aceite. Revisão humana fica pendente, conforme
+orientação do professor. O check ci-obrigatorio está vinculado ao app oficial
+GitHub Actions para impedir que outro emissor satisfaça esse requisito.
 A main contém só o README inicial criado automaticamente pelo GitHub. Nenhum
 código da atividade foi integrado sem revisão.
 

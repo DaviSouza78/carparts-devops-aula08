@@ -1,0 +1,21 @@
+{
+  "status": 200,
+  "app": {
+    "id": 15368,
+    "slug": "github-actions"
+  },
+  "requiredStatusChecks": {
+    "url": "https://api.github.com/repos/DaviSouza78/carparts-devops-aula08/branches/main/protection/required_status_checks",
+    "strict": true,
+    "contexts": [
+      "ci-obrigatorio"
+    ],
+    "contexts_url": "https://api.github.com/repos/DaviSouza78/carparts-devops-aula08/branches/main/protection/required_status_checks/contexts",
+    "checks": [
+      {
+        "context": "ci-obrigatorio",
+        "app_id": 15368
+      }
+    ]
+  }
+}

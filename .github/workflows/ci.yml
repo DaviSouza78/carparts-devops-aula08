@@ -25,12 +25,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Cache de downloads npm
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ matrix.componente }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: npm-${{ runner.os }}-${{ matrix.componente }}-
       - name: Validar componente e biblioteca dependente
         run: node scripts/validar.cjs "${{ matrix.componente }}"
   integracao:

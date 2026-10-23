@@ -8,8 +8,14 @@ uma aplicação comercial existente nem medições históricas da empresa fictí
 
 Os arquivos são propostos por pull request. Um colega da turma deve revisar e
 registrar sua aprovação antes da integração. Não integrar um PR de agente sem
-essa revisão. O proprietário adicionará o colega como colaborador e como
-responsável no CODEOWNERS antes do merge. O autor não aprova o próprio PR.
+essa revisão. Joaopedro0s foi convidado com acesso de escrita e está incluído no
+CODEOWNERS proposto. Ele precisa aceitar o convite antes de sua aprovação contar
+como aprovação de colaborador elegível. O autor não aprova o próprio PR.
+
+Este repositório pessoal não oferece merge queue; a tentativa retornou HTTP 422.
+Aqui, integrar por squash no GitHub após revisão, checks verdes e conversas
+resolvidas, respeitando a proteção. O workflow suporta merge_group para eventual
+repositório elegível de organização; não existe fila ativa neste laboratório.
 
 ## Executar localmente
 

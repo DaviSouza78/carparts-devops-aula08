@@ -1,8 +1,9 @@
-# Responsável titular do laboratório. Adicionar o colega com acesso de escrita
-# como owner antes do primeiro merge; Davi não pode aprovar o próprio PR.
-* @DaviSouza78
-/apps/portal/ @DaviSouza78
-/apps/api/ @DaviSouza78
-/libs/ui/ @DaviSouza78
-/prompts/ @DaviSouza78
-/.github/ @DaviSouza78
+# Davi mantém o laboratório; João Pedro revisa mudanças de Davi após aceitar
+# o convite de colaborador com escrita. Cada PR exige aprovação humana elegível
+# diferente do autor. As regras por pasta valem após este arquivo estar na main.
+* @DaviSouza78 @Joaopedro0s
+/apps/portal/ @DaviSouza78 @Joaopedro0s
+/apps/api/ @DaviSouza78 @Joaopedro0s
+/libs/ui/ @DaviSouza78 @Joaopedro0s
+/prompts/ @DaviSouza78 @Joaopedro0s
+/.github/ @DaviSouza78 @Joaopedro0s
