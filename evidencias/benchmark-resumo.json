@@ -1,0 +1,13 @@
+{
+  "antes": {
+    "checkout_ms": 903.0,
+    "trabalho_ms": 1227.3333333333333,
+    "job_total_ms": 6666.666666666667
+  },
+  "depois": {
+    "checkout_ms": 1076.0,
+    "trabalho_ms": 1389.6666666666667,
+    "job_total_ms": 7000.0
+  },
+  "variacao_checkout_percentual": -19.158361018826135
+}

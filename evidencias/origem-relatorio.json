@@ -1,0 +1,12 @@
+{
+  "metodo": "Download pelo botão Gerar relatório (.txt) do HTML original aberto no Chrome; preenchimento por controles da página.",
+  "htmlOriginal": "C:/Users/Administrator/Downloads/DeVops_Aula8_1.html",
+  "htmlOriginalSHA256": "d8e07d0d02698dc1ad9a61c9fbb9293e9c01def09daa40fea139c27a342f0f4e",
+  "htmlServidoIgualAoOriginal": true,
+  "arquivoBaixado": "C:/Users/Administrator/Downloads/DevOps_Aula08_Git_Scion_26180842_Davi_Marcondes_Paes_de_Souza.txt",
+  "arquivoEntregue": "entrega/DevOps_Aula08_Git_Scion_26180842_Davi_Marcondes_Paes_de_Souza.txt",
+  "sha256Download": "154274dcb844ea1423a62bf695ef95b8ade329cb88c9b9c0f4b1cd40c77faa04",
+  "sha256Entrega": "154274dcb844ea1423a62bf695ef95b8ade329cb88c9b9c0f4b1cd40c77faa04",
+  "identidadeByteAByte": true,
+  "comparacaoComGeradorOriginalEmDOM": "conteúdo igual, desconsiderando apenas o instante de geração na comparação; o arquivo final não foi normalizado nem modificado"
+}

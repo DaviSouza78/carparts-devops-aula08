@@ -1,0 +1,7 @@
+run_id,modo,repeticao,sha,checkout_ms,trabalho_ms,job_total_ms,job_url
+39870051060,antes,1,d6fe4ba545defd135fb2d5c5d5124981e4863293,885,1214,6000,https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923283
+39870051060,antes,2,d6fe4ba545defd135fb2d5c5d5124981e4863293,792,1047,6000,https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923670
+39870051060,antes,3,d6fe4ba545defd135fb2d5c5d5124981e4863293,1032,1421,8000,https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923798
+39870051060,depois,1,d6fe4ba545defd135fb2d5c5d5124981e4863293,1123,1368,7000,https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923448
+39870051060,depois,2,d6fe4ba545defd135fb2d5c5d5124981e4863293,1233,1606,9000,https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923549
+39870051060,depois,3,d6fe4ba545defd135fb2d5c5d5124981e4863293,872,1195,5000,https://github.com/DaviSouza78/carparts-devops-aula08/actions/runs/39870051060/job/120141923480

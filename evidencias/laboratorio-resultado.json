@@ -1,0 +1,8 @@
+{
+  "base": "a283496401a928865bdb05cbcd31a581bb67dfca",
+  "bugInserido": "3fb01ed6f24c7755d4eb272918ac4e921a44ee12",
+  "bugEncontrado": "3fb01ed6f24c7755d4eb272918ac4e921a44ee12",
+  "bisectCorreto": true,
+  "testeFinal": 0,
+  "remoto": false
+}
